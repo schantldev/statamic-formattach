@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="{{ site:short_locale }}" class="antialiased scroll-smooth scroll-pt-4">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1">
+        <style>
+            :root {
+                font-size: 16px !important;
+                --page-width: {{ page_size[0] }};
+                --page-height: {{ page_size[1] }};
+            }
+
+            html,
+            body {
+                width: {{ preview ? '100vw' : 'var(--page-width)' }};
+                margin: 0;
+                padding: 0;
+            }
+
+            {{ partial src="statamic-formattach::pdf_styles" }}
+        </style>
+    </head>
+    <body class="flex flex-col {{ preview ?= 'bg-gray-100' }}">
+        {{ if preview }}
+            <div class="mx-auto w-[--page-width] overflow-y-auto my-20">
+        {{ /if }}
+        <section class="bg-white flex flex-col w-full h-screen shrink-0 overflow-hidden relative {{ preview ?= 'border mt-5 max-h-[--page-height]' }}">
+            <div class="absolute inset-0" style="padding: 5mm 20mm;">
+                <div class="w-full flex justify-between items-end pb-4">
+                    <h1 class="text-2xl font-bold">{{ subject }}</h1>
+                    {{ if logo }}
+                        <div class="ml-auto">
+                            {{? $img = base64_encode(file_get_contents($logo)) ?}}
+                            <img src="data:image/png;base64,{{ $img }}" alt="Logo" class="h-24 ml-16">
+                        </div>
+                    {{ /if }}
+                </div>
+                <div class="grid grid-cols-12 gap-6 text-xs">
+                    {{ foreach:submission }}
+                        {{? 
+                                                                                                                                                                                                                            $width = match($blueprint[$key]['width']) {
+                                                                                                                                                                                                                                25 => 'col-span-3',
+                                                                                                                                                                                                                                33 => 'col-span-4',
+                                                                                                                                                                                                                                50 => 'col-span-6',
+                                                                                                                                                                                                                                66 => 'col-span-8',
+                                                                                                                                                                                                                                75 => 'col-span-9',
+                                                                                                                                                                                                                                default => 'col-span-12'
+                                                                                                                                                                                                                            };
+                                                                                                                                                                                                                        ?}}
+                        <div class="{{ width }}">
+                            <label class="font-bold uppercase text-[.8em]" for="{{ key }}">{{ blueprint[key]['display'] }}</label>
+                            <p id="{{ key }}">{{ value | nl2br }}</p>
+                        </div>
+                    {{ /foreach:submission }}
+                </div>
+            </div>
+        </section>
+        {{ if preview }}
+            </div>
+        {{ /if }}
+    </body>
+</html>

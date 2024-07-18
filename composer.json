@@ -1,0 +1,37 @@
+{
+  "name": "schantldev/statamic-formattach",
+  "autoload": {
+    "psr-4": {
+      "SchantlDev\\Statamic\\FormAttach\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SchantlDev\\Statamic\\FormAttach\\Tests\\": "tests"
+    }
+  },
+  "require": {
+    "statamic/cms": "^5.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^9.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "pixelfear/composer-dist-plugin": true
+    }
+  },
+  "extra": {
+    "statamic": {
+      "name": "Statamic Form Mail Attachments",
+      "description": "Easily attach files to submission mails."
+    },
+    "laravel": {
+      "providers": [
+        "SchantlDev\\Statamic\\FormAttach\\ServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
