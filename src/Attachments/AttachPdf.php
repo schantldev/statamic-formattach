@@ -3,6 +3,7 @@
 namespace SchantlDev\Statamic\FormAttach\Attachments;
 
 use Illuminate\Mail\Mailables\Attachment;
+use Override;
 use SchantlDev\Statamic\FormAttach\Forms\SubmissionHelper;
 
 class AttachPdf extends FormAttachment
@@ -18,6 +19,7 @@ class AttachPdf extends FormAttachment
         $this->view = 'statamic-formattach::pdf_attachment';
     }
 
+    #[Override]
     public function check(): bool
     {
         return class_exists(\Spatie\Browsershot\Browsershot::class);

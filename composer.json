@@ -11,14 +11,17 @@
     }
   },
   "require": {
-    "statamic/cms": "^5.0"
+    "statamic/cms": "^5.0",
+    "laravel/pint": "^1.18"
   },
   "require-dev": {
-    "orchestra/testbench": "^9.0"
+    "orchestra/testbench": "^9.0",
+    "pestphp/pest": "^2.36"
   },
   "config": {
     "allow-plugins": {
-      "pixelfear/composer-dist-plugin": true
+      "pixelfear/composer-dist-plugin": true,
+      "pestphp/pest-plugin": true
     }
   },
   "extra": {
