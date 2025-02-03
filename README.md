@@ -1,5 +1,3 @@
-<img src="FormAttach.png" alt="Thumbnail">
-
 # Statamic FormAttach
 
 > Statamic FormAttach is a Statamic addon that allows to easily attach any files to form submission mails dynamically.
