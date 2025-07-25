@@ -531,8 +531,8 @@ video {
 .h-screen {
   height: 100vh;
 }
-.max-h-\[--page-height\] {
-  max-height: var(--page-height);
+.min-h-\[--page-height\] {
+  min-height: var(--page-height);
 }
 .w-\[--page-width\] {
   width: var(--page-width);

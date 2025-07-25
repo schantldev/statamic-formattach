@@ -102,5 +102,5 @@ class PdfAttachment extends AttachPdf
 
 Contributions and discussions are always welcome, no matter how large or small. If you happen to find an issue, please open up a Github issue or do a PR if you can.
 
-[^1]: The addon required Browserhot for the PDF attachment to work out of the box. Please note that the addon will not install Browsershot for you as you might have already installed some version of it. Please install Browsershot directly into your project.
+[^1]: The addon requires Browserhot for the PDF attachment to work out of the box. Please note that the addon will not install Browsershot for you as you might have already installed some version of it. Please install Browsershot directly into your project.
 [^2]: Refer to the offical [Laravel documentation](https://laravel.com/docs/mail#attachments) on how to create attachments in various ways.
