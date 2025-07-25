@@ -18,6 +18,13 @@
                 padding: 0;
             }
 
+            .preview-margins {
+                padding-top: {{ config:statamic-formattach:margins:top ?? 10 }}{{ config:statamic-formattach:margins:unit ?? 'mm' }};
+                padding-right: {{ config:statamic-formattach:margins:right ?? 15 }}{{ config:statamic-formattach:margins:unit ?? 'mm' }};
+                padding-bottom: {{ config:statamic-formattach:margins:bottom ?? 10 }}{{ config:statamic-formattach:margins:unit ?? 'mm' }};
+                padding-left: {{ config:statamic-formattach:margins:left ?? 15 }}{{ config:statamic-formattach:margins:unit ?? 'mm' }};
+            }
+
             {{ partial src="statamic-formattach::pdf_styles" }}
         </style>
     </head>
@@ -25,47 +32,45 @@
         {{ if preview }}
             <div class="mx-auto w-[--page-width] overflow-y-auto my-20">
         {{ /if }}
-        <section class="bg-white flex flex-col w-full h-screen shrink-0 overflow-hidden relative {{ preview ?= 'border mt-5 max-h-[--page-height]' }}">
-            <div class="absolute inset-0" style="padding: 5mm 20mm;">
-                <div class="w-full flex justify-between items-end pb-4">
-                    <h1 class="text-2xl font-bold">{{ subject }}</h1>
-                    {{ if logo }}
-                        <div class="ml-auto">
-                            {{? $img = base64_encode(file_get_contents($logo)) ?}}
-                            <img src="data:image/png;base64,{{ $img }}" alt="Logo" class="h-24 ml-16">
+        <section class="bg-white flex flex-col w-full shrink-0 relative {{ preview ? 'border mt-5 preview-margins' : 'h-screen' }}">
+            <div class="w-full flex justify-between items-end pb-4">
+                <h1 class="text-2xl font-bold">{{ subject }}</h1>
+                {{ if logo }}
+                    <div class="ml-auto">
+                        {{? $img = base64_encode(file_get_contents($logo)) ?}}
+                        <img src="data:image/png;base64,{{ $img }}" alt="Logo" class="h-24 ml-16">
+                    </div>
+                {{ /if }}
+            </div>
+            <div class="grid grid-cols-12 gap-6 text-xs">
+                {{ submission:fields }}
+                    {{ if value && {config['visibility']} !== 'hidden' }}
+                        {{? 
+                            $width = match($blueprint[$handle]['width']) {
+                                25 => 'col-span-3',
+                                33 => 'col-span-4',
+                                50 => 'col-span-6',
+                                66 => 'col-span-8',
+                                75 => 'col-span-9',
+                                default => 'col-span-12'
+                            };
+                        ?}}
+                        <div class="{{ width }}">
+                            <label class="font-bold uppercase text-[.8em]" for="{{ handle }}">{{ config['display'] }}</label>
+                            {{ if (value | is_array) }}
+                                <p>
+                                    {{ value }}
+                                        <span>
+                                            {{ (label ?? value) | nl2br }}
+                                        </span>{{ !last ?= '<br>' }}
+                                    {{ /value }}
+                                </p>
+                            {{ else }}
+                                <p id="{{ handle }}">{{ (value:label ?? value) | nl2br }}</p>
+                            {{ /if }}
                         </div>
                     {{ /if }}
-                </div>
-                <div class="grid grid-cols-12 gap-6 text-xs">
-                    {{ submission:fields }}
-                        {{ if value && {config['visibility']} !== 'hidden' }}
-                            {{? 
-                                $width = match($blueprint[$handle]['width']) {
-                                    25 => 'col-span-3',
-                                    33 => 'col-span-4',
-                                    50 => 'col-span-6',
-                                    66 => 'col-span-8',
-                                    75 => 'col-span-9',
-                                    default => 'col-span-12'
-                                };
-                            ?}}
-                            <div class="{{ width }}">
-                                <label class="font-bold uppercase text-[.8em]" for="{{ handle }}">{{ config['display'] }}</label>
-                                {{ if (value | is_array) }}
-                                    <p>
-                                        {{ value }}
-                                            <span>
-                                                {{ (label ?? value) | nl2br }}
-                                            </span>{{ !last ?= '<br>' }}
-                                        {{ /value }}
-                                    </p>
-                                {{ else }}
-                                    <p id="{{ handle }}">{{ (value:label ?? value) | nl2br }}</p>
-                                {{ /if }}
-                            </div>
-                        {{ /if }}
-                    {{ /submission:fields }}
-                </div>
+                {{ /submission:fields }}
             </div>
         </section>
         {{ if preview }}

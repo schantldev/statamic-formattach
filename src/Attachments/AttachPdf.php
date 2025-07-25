@@ -41,6 +41,7 @@ class AttachPdf extends FormAttachment
             'blueprint' => $this->submissionHelper->blueprintFields(),
             'page_size' => config('statamic-formattach.format_sizes.'.$this->size),
             'preview' => $preview,
+            'config' => config()->all(),
         ])->render();
     }
 
@@ -49,6 +50,13 @@ class AttachPdf extends FormAttachment
         return
             \Spatie\Browsershot\Browsershot::html($this->view())
                 ->format($this->size)
+                ->margins(
+                    top: config('statamic-formattach.margins.top', null),
+                    right: config('statamic-formattach.margins.right', null),
+                    bottom: config('statamic-formattach.margins.bottom', null),
+                    left: config('statamic-formattach.margins.left', null),
+                    unit: config('statamic-formattach.margins.unit', null),
+                )
                 ->pdf();
     }
 }

@@ -38,6 +38,17 @@ return [
         'A6' => ['105mm', '148mm'],
     ],
 
+    /**
+     * The margins applied to PDF pages.
+     */
+    'margins' => [
+        'top' => 10,
+        'right' => 15,
+        'bottom' => 15,
+        'left' => 10,
+        'unit' => 'mm',
+    ],
+
     'forms' => [
         'form_handle' => [
             // \SchantlDev\Statamic\FormAttach\Attachments\AttachPdf::class,
